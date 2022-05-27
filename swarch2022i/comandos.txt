@@ -1,0 +1,17 @@
+data:
+docker build -t swarch2022i_db .
+docker run -d -t -i -p 3306:3306 --name swarch2022i_db swarch2022i_db
+docker run --name db_client -d --link swarch2022i_db:db -p 8081:80 phpmyadmin
+http://localhost:8081
+
+microservisio (py)
+docker build -t swarch2022i_ms .
+docker run -p 4000:4000 -e DB_HOST=host.docker.internal -e DB_PORT=3306 -e DB_USER=swarch2022i -e DB_PASSWORD=2022 -e DB_NAME=swarch2022i_db -e URL=0.0.0.0:4000 swarch2022i_ms
+
+	X = host.docker.internal 
+	Y = usuario de la base de datos.
+	Z = contraseña de la base de datos.
+
+graphiql.
+docker build -t swarch2022i_ag .
+docker run -p 5000:5000 swarch2022i_ag
